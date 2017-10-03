@@ -1,10 +1,6 @@
 package com.ab.java.spring.studies.one.bookstore.model;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +13,23 @@ public class Author {
     private String firstName;
     private String lastName;
 
-    private Set<Book> books = new HashSet<>();
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<Book>();
 
+    public Author(){
 
+    }
+
+    public Author(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Author(String firstName, String lastName, Set<Book> books) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.books = books;
+    }
 
     public Long getId() {
         return id;

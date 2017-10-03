@@ -1,11 +1,6 @@
 package com.ab.java.spring.studies.one.bookstore.model;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +13,26 @@ public class Book {
     private String title;
     private String isbn;
     private String publisher;
-    private Set<Author> authors = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name="book_author", joinColumns=@JoinColumn(name="book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name="author_id",referencedColumnName = "id"))
+    private Set<Author> authors = new HashSet<Author>();
+
+    public Book(){
+    }
+
+    public Book(String title, String isbn, String publisher){
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+    }
+
+    public Book(String title, String isbn, String publisher, Set<Author> authors) {
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.authors = authors;
+    }
 
     public Long getId() {
         return id;
